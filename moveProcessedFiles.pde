@@ -50,12 +50,18 @@ int getMoved() {
   return moved;
 }
 
+// getTime
+String gT(int _t) {
+  String t = String.valueOf(_t);
+  return (_t < 10) ? "0" + t : t;
+}
+
 void compareFolders() {
   recheckTimerTaskRunning = true;
   
   println("\tsource files: "+ sourceFiles.size());
   println("\tprocessed files: "+ processedFiles.size() + "\n");
-
+  
   for (int i = 0; i < sourceFiles.size(); i++) {
     String name = sourceFiles.get(i);
 
@@ -72,7 +78,7 @@ void compareFolders() {
   println("\n - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
 
   // set timer
-  if (timerDelay != 0) {
+  if (timerDelay != 0 && sourceFiles.size() >= 1) {
     rechecker.schedule(new RecheckTimerTask(), (long) (timerDelay * 1000) * 60);
   }
 }
@@ -85,7 +91,7 @@ void moveSourceFile(String name) {
 
 public class RecheckTimerTask extends TimerTask {  
   RecheckTimerTask() {  
-    println("\n" + hour() + ":" + minute() + ":" + second() + ": Recheck the folders in " + timerDelay + " minutes.\n");
+    println("\n" + gT(hour()) + ":" + gT(minute()) + ":" + gT(second()) + ": Recheck the folders in " + timerDelay + " minutes.\n");
   }  
   public void run() {  
     recheckTimerTaskRunning = true;
