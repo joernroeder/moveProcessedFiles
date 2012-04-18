@@ -1,6 +1,6 @@
 
 String processedFolderName = "_processed";
-float timerDelay = 3; // rechecks the folder after timerDelay minutes. set to 0 to disable rechecks.
+float timerDelay = 1; // rechecks the folder after timerDelay minutes. set to 0 to disable rechecks.
 
 String sourceFolder;
 String processedFolder;
@@ -16,24 +16,24 @@ int moved = 0;
 void setup() {
   size(400, 150);
   color(255);
-  noLoop();
+  //noLoop();
 
   // set timer
   rechecker = new Timer();
 
   // select folders
-  sourceFolder = selectFolder("source folder");
-  processedFolder = selectFolder("processed folder");
+  sourceFolder = "/Volumes/HDD/Users/joern/Dropboxes/kontakt@joernroeder.de/Dropbox/fbManchester/images03"; //selectFolder("source folder");
+  processedFolder = "/Volumes/HDD/Users/joern/Projects/fbFaces/fbManchester/300dpis/images03"; //selectFolder("processed folder");
 }
 
 void draw() {
-  getFiles();
-  compareFolders();
-}
+  if (!recheckTimerTaskRunning) {
+    getFiles();
+    compareFolders();
+  }
 
-void updateUI() {
   background(0);
-  text("moved " + moved + " files", 10, 30);
+  text("moved " + getMoved() + " files", 10, 30);
 }
 
 void getFiles() {
@@ -46,40 +46,46 @@ void getFiles() {
   processedFiles = new ArrayList(Arrays.asList(processedPath.list()));
 }
 
+int getMoved() {
+  return moved;
+}
+
 void compareFolders() {
-  for (int i = 0; i < processedFiles.size(); i++) {
-    String name = processedFiles.get(i);
+  recheckTimerTaskRunning = true;
+  
+  println("\tsource files: "+ sourceFiles.size());
+  println("\tprocessed files: "+ processedFiles.size() + "\n");
+
+  for (int i = 0; i < sourceFiles.size(); i++) {
+    String name = sourceFiles.get(i);
 
     // move source file
-    if (sourceFiles.contains(name)) {
+    if (processedFiles.contains(name)) {
       moveSourceFile(name);
       moved++;
     }
 
     // remove processed file from list
-    processedFiles.remove(i);
-
-    // add to chache
-    //cachedFiles.add(name);
+    sourceFiles.remove(i);
   }
-
-  updateUI();
+  
+  println("\n - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
 
   // set timer
   if (timerDelay != 0) {
-    rechecker.schedule(new RecheckTimerTask(), (long) timerDelay * 1000 * 60);
+    rechecker.schedule(new RecheckTimerTask(), (long) (timerDelay * 1000) * 60);
   }
 }
 
 void moveSourceFile(String name) {
-  println("move file: " + name);
+  println("\t- move file: " + name);
   File ff = new File(sourceFolder + "/" + name);
   ff.renameTo(new File(sourceFolder + "/" + processedFolderName + "/" + name));
 }
 
 public class RecheckTimerTask extends TimerTask {  
   RecheckTimerTask() {  
-    println(hour() + ":" + minute() + ":" + second() + ": Recheck the folders in " + timerDelay + " minutes.");
+    println("\n" + hour() + ":" + minute() + ":" + second() + ": Recheck the folders in " + timerDelay + " minutes.\n");
   }  
   public void run() {  
     recheckTimerTaskRunning = true;

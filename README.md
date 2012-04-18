@@ -1,7 +1,7 @@
 Move processed Images
 =====================
 
-Do you know the problem:
+Do you know the problem:  
 You have a folder with many files that should be processed automatically. For example, using Photoshop Actions. Since the whole process takes several hours you decide that the computer can do it all while you're sleeping.  
 On the next morning you'll wake up and are pleased that everything is done, but Photoshop has crashed!
 When you restart the action all the processed files will be processed by Photoshops action again.
