@@ -6,11 +6,9 @@ You have a folder with many files that should be processed automatically. For ex
 On the next morning you'll wake up and are pleased that everything is done, but Photoshop has crashed!
 When you restart the action all the processed files will be processed by Photoshops action again.
 
-This program will observe both folders (source-folder and destination-folder) and moves the source file after it is saved in the destination directory.
+This program will observe both folders (source-folder and destination-folder) and moves the source file into the sub-folder (`processedFolderName`) after it is saved in the destination directory.
 
 Select source and destination folder and grab a coffee, because it's still breakfast time. :)  
-
-The script will move the processed files into the sub-folder (`processedFolderName`).
 
 ### Required Actions
 
