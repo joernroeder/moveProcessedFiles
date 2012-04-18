@@ -22,8 +22,8 @@ void setup() {
   rechecker = new Timer();
 
   // select folders
-  sourceFolder = "/Volumes/HDD/Users/joern/Dropboxes/kontakt@joernroeder.de/Dropbox/fbManchester/images03"; //selectFolder("source folder");
-  processedFolder = "/Volumes/HDD/Users/joern/Projects/fbFaces/fbManchester/300dpis/images03"; //selectFolder("processed folder");
+  sourceFolder = selectFolder("source folder");
+  processedFolder = selectFolder("processed folder");
 }
 
 void draw() {
